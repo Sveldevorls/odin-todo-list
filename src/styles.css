@@ -1,0 +1,64 @@
+:root {
+    --sidebar-color: rgb(160, 197, 235);
+    --sidebar-color-dark: rgb(113, 175, 236);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* body {
+    
+} */
+
+#app {
+    display: flex;
+    font-family: "Roboto", sans-serif;
+
+    min-height: 100vh;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2lh;
+
+    width: 12rem;
+    height: inherit;
+    background-color: var(--sidebar-color);
+    font-size: 1.5rem;
+    padding-top: 1rem;
+}
+
+#sidebar > div > p {
+    padding-left: 1rem;
+}
+
+#sidebar-top {
+    font-weight: 700;
+}
+
+#sidebar-lists {
+    font-weight: 500;
+}
+
+.side-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    height: 1.2lh;
+    padding-left: 1rem;
+}
+
+.side-section:hover {
+    background-color: var(--sidebar-color-dark);
+    cursor: pointer;
+}
+
+.icon {
+    height: 1lh;
+    filter: invert(10%);
+}
