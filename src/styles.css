@@ -71,6 +71,7 @@
 #main {
     background-color: var(--main-color);
     display: flex;
+    flex-direction: column;
     flex: 1;
 }
 
@@ -80,15 +81,21 @@
     align-items: center;
     
     background-color: var(--task-color);
-    margin: 1em;
+    margin: 1em 1em 0 1em;
     border-radius: 0.5em;
     height: 4.5lh;
-    width: 100%;
+    width: calc(100% - 2em);
 }
 
 .task-inner{
     padding-left: 1em;
+    height: 100%;
+    padding-top: 0.5em;
     margin-right: auto;
+}
+
+.task-inner > p {
+    height: 1lh;
 }
 
 .task-title{

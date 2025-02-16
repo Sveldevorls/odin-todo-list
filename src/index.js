@@ -5,4 +5,6 @@ import { renderTask } from "./mainDisplay";
 
 startApp();
 sidebarRenderLists();
-renderTask(0);
+for (let i of JSON.parse(localStorage.getItem("lists"))[0]["childTasks"]) {
+    renderTask(i);
+}

@@ -35,6 +35,7 @@ export const renderTask = function(id){
     }
     
     if (myTask.dueDate != "") {
+        console.log(myTask.dueDate)
         myTaskDetails.append(newElement("p", ["innerText", formatDueDateString(myTask.dueDate)]));
     }
     
