@@ -6,7 +6,7 @@ export const startApp = function(){
         addList(...newList("Default"));
     }
     if (localStorage.getItem("tasks") === null) {
-        addTask(...newTask("Sample task", "Sample description", new Date(), 2, "Sample note"));
+        addTask(...newTask("Sample task", "Sample description", new Date(), true, "Sample note"));
     }
 }
 

@@ -2,15 +2,13 @@ import { newElement } from "./tools"
 import arrowRight from "./img/arrow-right.svg"
 import clock from "./img/clock.svg"
 import notes from "./img/note.svg"
-import priorityMedium from "./img/excl.svg"
-import priorityHigh from "./img/excl-double.svg"
 
 const mainDisplay = document.getElementById("main");
 
 const formatDueDateString = (date) => {
     const monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."];
     const dates = date.split("-");
-    return `${monthNames[dates[1] - 1]} ${dates[2]}, ${dates[0]}`
+    return `Due ${monthNames[dates[1] - 1]} ${dates[2]}, ${dates[0]}`
 }
 
 export const renderTask = function(id){
@@ -21,39 +19,32 @@ export const renderTask = function(id){
     const myTaskInner = newElement("div", ["className", "task-inner"]);
     const myTaskSide = newElement("div", ["className", "task-side"]);
 
-    const arrow = newElement("img", ["className", "icon"], ["src", arrowRight]);
+    const arrow = newElement("img", ["src", arrowRight], ["className", "icon"]);
     
     const myTaskTitle = newElement("p", ["className", "task-title"], ["innerText", myTask.title]);
     const myTaskDescription = newElement("p", ["className", "task-description"], ["innerText", myTask.description]);
 
-    const myTaskDetails = newElement("ul", ["className", "task-details"]);
+    const myTaskDetails = newElement("div", ["className", "task-details"]);
 
-    if (myTask.priority === 1 || myTask.priority === 2) {
-        const priorityLi = newElement("li");
-        priorityLi.append(newElement("img", ["className", "icon"], ["src", [priorityMedium, priorityHigh][myTask.priority-1]]))
-        myTaskDetails.append(priorityLi);
+    if (myTask.isImportant) {
+        myTaskDetails.append(newElement("p", ["innerText", "Important"], ["style", "color:red"]));
     }
 
     if (myTask.notes != "") {
-        const notesLi = newElement("li");
-        notesLi.append(newElement("img", ["className", "icon"], ["src", notes]));
-        myTaskDetails.append(notesLi);
+        myTaskDetails.append(newElement("p", ["innerText", "Notes"]));
     }
     
-    const dueDateLi = newElement("li");
-    dueDateLi.append(...[newElement("img", ["className", "icon"], ["src", clock]), formatDueDateString(myTask.dueDate)]);
+    if (myTask.dueDate != "") {
+        myTaskDetails.append(newElement("p", ["innerText", formatDueDateString(myTask.dueDate)]));
+    }
     
-    myTaskDetails.append(dueDateLi);
-
     myTaskInner.append(...[myTaskTitle, myTaskDescription, myTaskDetails]);
     myTaskSide.append(arrow)
     myTaskDiv.append(...[myTaskInner, myTaskSide]);
 
-    const finishedStatus = myTask.isFinished ? "finished" : "unfinished";
-    const priority = ["low", "medium", "high"][myTask.priority];
-
-    myTaskDiv.classList.add(finishedStatus);
-    myTaskDiv.classList.add(priority);
+    myTaskDiv.classList.add(myTask.isFinished ? "finished" : "unfinished");
+    if (myTask.isImportant) myTaskDiv.classList.add("important");
+    
 
     myTaskDiv.dataset.taskId = id;
 

@@ -97,20 +97,25 @@
 
 .task-description {
     color: gray;
-    font-size: 0.9em;
+    font-size: 0.95em;
 }
 
 .task-details {
-    margin-top: 0.5lh;
     display: flex;
+    align-items: center;
+    gap: 1em;
+
+    color: gray;
+    margin-top: 0.5lh;
+    font-size: 0.9em;
 }
 
-.task-details > img {
-    padding-right: 0.2em;
-}
-
-.task-details > img + img {
-    padding-left: 0.5em;
+.task-details > p + p::before {
+    content: "●";
+    font-size: 0.7em;
+    position: relative;
+    right: 0.7em;
+    bottom: 0.1em;
 }
 
 .task-side {
@@ -137,34 +142,15 @@
     position:absolute;
 }
 
-.finished {
-    box-shadow: -5px 0px green;
+.finished::before {
+    content: "";
+    height: 4.5lh;
+    width: 0.5em;
+    background-color: green;
+    border-radius: 0.5em 0 0 0.5em;
+    position:absolute;
 }
 
 #info {
     display: none;
-}
-
-ul {
-    display: inline-block;
-    list-style: none;
-}
-
-li > img {
-    height: 1lh;
-    line-height: 1lh;
-    vertical-align: text-bottom;
-}
-
-li + li {
-    padding-left: 0.5em;
-}
-
-li + li::before {
-    content: "●";
-    line-height: 1lh;
-    font-size: 0.7em;
-    vertical-align: text-bottom;
-    position: relative;
-    right: 0.35em;
 }
