@@ -1,6 +1,11 @@
 :root {
     --sidebar-color: rgb(160, 197, 235);
-    --sidebar-color-dark: rgb(113, 175, 236);
+    --sidebar-color-dark: hsl(from var(--sidebar-color) h s calc(l - 5));
+
+    --main-color: rgb(206, 223, 240);
+
+    --task-color: rgb(255, 255, 255);
+    --task-color-dark: hsl(from var(--task-color) h s calc(l - 5));
 }
 
 * {
@@ -61,4 +66,105 @@
 .icon {
     height: 1lh;
     filter: invert(10%);
+}
+
+#main {
+    background-color: var(--main-color);
+    display: flex;
+    flex: 1;
+}
+
+.task {
+    display: grid;
+    grid-template-columns: 1fr 2em;
+    align-items: center;
+    
+    background-color: var(--task-color);
+    margin: 1em;
+    border-radius: 0.5em;
+    height: 4.5lh;
+    width: 100%;
+}
+
+.task-inner{
+    padding-left: 1em;
+    margin-right: auto;
+}
+
+.task-title{
+    font-size: 1.2em;
+}
+
+.task-description {
+    color: gray;
+    font-size: 0.9em;
+}
+
+.task-details {
+    margin-top: 0.5lh;
+    display: flex;
+}
+
+.task-details > img {
+    padding-right: 0.2em;
+}
+
+.task-details > img + img {
+    padding-left: 0.5em;
+}
+
+.task-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    height: 100%;
+    width: 2em;
+}
+
+.task-side:hover {
+    background-color: var(--task-color-dark);
+    cursor: pointer;
+    border-radius: 0 0.5em 0.5em 0;
+}
+
+.unfinished::before {
+    content: "";
+    height: 4.5lh;
+    width: 0.5em;
+    background-color: red;
+    border-radius: 0.5em 0 0 0.5em;
+    position:absolute;
+}
+
+.finished {
+    box-shadow: -5px 0px green;
+}
+
+#info {
+    display: none;
+}
+
+ul {
+    display: inline-block;
+    list-style: none;
+}
+
+li > img {
+    height: 1lh;
+    line-height: 1lh;
+    vertical-align: text-bottom;
+}
+
+li + li {
+    padding-left: 0.5em;
+}
+
+li + li::before {
+    content: "●";
+    line-height: 1lh;
+    font-size: 0.7em;
+    vertical-align: text-bottom;
+    position: relative;
+    right: 0.35em;
 }

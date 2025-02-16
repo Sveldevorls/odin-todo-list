@@ -6,7 +6,6 @@ export const sidebarRenderLists = function(){
     listsDiv.replaceChildren();
 
     const myLists = JSON.parse(localStorage.getItem("lists"));
-    console.log(myLists)
     for (let[id, list] of Object.entries(myLists)) {
         let myListNode = newElement("div", ["className", "side-section"]);
         let myListTitle = newElement("p", ["innerText", list.title]);
