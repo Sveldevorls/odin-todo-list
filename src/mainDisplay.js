@@ -15,38 +15,38 @@ export const renderTask = function(id){
     const myTask = JSON.parse(localStorage.getItem("tasks"))[id];
     
     const myTaskDiv = newElement("div", ["className", "task"]);
+    myTaskDiv.append(newElement("img", ["src", arrowRight], ["className", "icon task-arrow"]))
 
-    const myTaskInner = newElement("div", ["className", "task-inner"]);
-    const myTaskSide = newElement("div", ["className", "task-side"]);
+    // task title
+    myTaskDiv.append(newElement("p", ["className", "task-title"], ["innerText", myTask.title]));
 
-    const arrow = newElement("img", ["src", arrowRight], ["className", "icon"]);
-    
-    const myTaskTitle = newElement("p", ["className", "task-title"], ["innerText", myTask.title]);
-    const myTaskDescription = newElement("p", ["className", "task-description"], ["innerText", myTask.description]);
-
-    const myTaskDetails = newElement("div", ["className", "task-details"]);
-
-    if (myTask.isImportant) {
-        myTaskDetails.append(newElement("p", ["innerText", "Important"], ["style", "color:red"]));
+    // task description
+    if (myTask.description != "") {
+        myTaskDiv.append(newElement("p", ["className", "task-description"], ["innerText", myTask.description]));
     }
 
-    if (myTask.notes != "") {
-        myTaskDetails.append(newElement("p", ["innerText", "Notes"]));
+    // task details
+    if (myTask.isImportant == true || myTask.notes != "" || myTask.dueDate != ""){
+        const myTaskDetails = newElement("div", ["className", "task-details"]);
+        if (myTask.isImportant) {
+            myTaskDetails.append(newElement("p", ["innerText", "Important"], ["style", "color:red"]));
+        }
+        if (myTask.notes != "") {
+            myTaskDetails.append(newElement("p", ["innerText", "Notes"]));
+        }
+        if (myTask.dueDate != "") {
+            myTaskDetails.append(newElement("p", ["innerText", formatDueDateString(myTask.dueDate)]));
+        }
+        myTaskDiv.append(myTaskDetails);
     }
-    
-    if (myTask.dueDate != "") {
-        console.log(myTask.dueDate)
-        myTaskDetails.append(newElement("p", ["innerText", formatDueDateString(myTask.dueDate)]));
-    }
-    
-    myTaskInner.append(...[myTaskTitle, myTaskDescription, myTaskDetails]);
-    myTaskSide.append(arrow)
-    myTaskDiv.append(...[myTaskInner, myTaskSide]);
 
+    // task finish status
     myTaskDiv.classList.add(myTask.isFinished ? "finished" : "unfinished");
-    if (myTask.isImportant) myTaskDiv.classList.add("important");
-    
 
+    // task importance
+    if (myTask.isImportant) myTaskDiv.classList.add("important");
+
+    // task data-id
     myTaskDiv.dataset.taskId = id;
 
     mainDisplay.append(myTaskDiv);

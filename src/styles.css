@@ -14,15 +14,16 @@
     padding: 0;
 }
 
-/* body {
-    
-} */
-
 #app {
     display: flex;
     font-family: "Roboto", sans-serif;
 
     min-height: 100vh;
+}
+
+.icon {
+    height: 1lh;
+    filter: invert(10%);
 }
 
 #sidebar {
@@ -63,10 +64,7 @@
     cursor: pointer;
 }
 
-.icon {
-    height: 1lh;
-    filter: invert(10%);
-}
+/* Main display */
 
 #main {
     background-color: var(--main-color);
@@ -77,8 +75,12 @@
 
 .task {
     display: grid;
-    grid-template-columns: 1fr 2em;
-    align-items: center;
+    grid-template-columns: 1fr 2em; 
+    grid-template-rows: 1fr 1fr 1fr; 
+    grid-template-areas: 
+        "title arrow"
+        "description arrow"
+        "details arrow"; 
     
     background-color: var(--task-color);
     margin: 1em 1em 0 1em;
@@ -87,33 +89,44 @@
     width: calc(100% - 2em);
 }
 
-.task-inner{
-    padding-left: 1em;
-    height: 100%;
-    padding-top: 0.5em;
-    margin-right: auto;
+.task > p, .task > div {
+    padding-left: 1rem;
 }
 
-.task-inner > p {
-    height: 1lh;
+.task-arrow {
+    grid-area: arrow;
+    align-self: center;
+
+    height: 100%;
+    width: 2em;
+    border-radius: 0 0.5em 0.5em 0;
+}
+
+.task-arrow:hover {
+    background-color: var(--task-color-dark);
+    cursor: pointer;
 }
 
 .task-title{
+    grid-area: title;
     font-size: 1.2em;
+    margin-top: 0.5lh;
 }
 
 .task-description {
+    grid-area: description;
     color: gray;
     font-size: 0.95em;
 }
 
 .task-details {
+    grid-area: details;
     display: flex;
     align-items: center;
     gap: 1em;
 
     color: gray;
-    margin-top: 0.5lh;
+    margin-bottom: 0.5lh;
     font-size: 0.9em;
 }
 
@@ -123,21 +136,6 @@
     position: relative;
     right: 0.7em;
     bottom: 0.1em;
-}
-
-.task-side {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    height: 100%;
-    width: 2em;
-}
-
-.task-side:hover {
-    background-color: var(--task-color-dark);
-    cursor: pointer;
-    border-radius: 0 0.5em 0.5em 0;
 }
 
 .unfinished::before {
@@ -157,6 +155,12 @@
     border-radius: 0.5em 0 0 0.5em;
     position:absolute;
 }
+
+
+
+
+
+
 
 #info {
     display: none;
