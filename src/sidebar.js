@@ -1,17 +1,16 @@
-import { newElement } from "./tools"
-import point from "./img/point.svg"
+import { listFullPageTemplate, newSidebarListNode } from "./dom-templates";
+import { sidebarLists, mainDisplay, renderContentAt } from "./ui";
 
-export const sidebarRenderLists = function(){
-    const listsDiv = document.getElementById("lists");
-    listsDiv.replaceChildren();
 
+export const sidebarShowLists = function() {
     const myLists = JSON.parse(localStorage.getItem("lists"));
     for (let[id, list] of Object.entries(myLists)) {
-        let myListNode = newElement("div", ["className", "side-section"]);
-        let myListTitle = newElement("p", ["innerText", list.title]);
-        let pointImage = newElement("img", ["className", "icon"], ["src", point]);
-        myListNode.append(...[pointImage, myListTitle]);
-        myListNode.dataset.taskId = id;
-        listsDiv.appendChild(myListNode);
+        sidebarLists.append(newSidebarListNode(id, list));
     }
+
+    // every div in #lists has a dataset list-id
+    sidebarLists.addEventListener("click", (e) => {
+        let targetListID = e.target.closest("div").dataset["listId"];
+        renderContentAt(mainDisplay, listFullPageTemplate(targetListID));
+    })
 }

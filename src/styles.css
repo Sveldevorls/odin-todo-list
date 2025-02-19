@@ -83,10 +83,10 @@
         "details arrow"; 
     
     background-color: var(--task-color);
-    margin: 1em 1em 0 1em;
+    margin-top: 1em;
     border-radius: 0.5em;
     height: 4.5lh;
-    width: calc(100% - 2em);
+    width: 100%;
 }
 
 .task > p, .task > div {
@@ -154,6 +154,20 @@
     background-color: green;
     border-radius: 0.5em 0 0 0.5em;
     position:absolute;
+}
+
+.list-fullpage {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+}
+
+.list-title-fullpage::after {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, #555 0%, #000 50%, #555 100%);
 }
 
 

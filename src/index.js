@@ -1,10 +1,6 @@
 import "./styles.css"
 import { startApp } from "./app"
-import { sidebarRenderLists } from "./sidebar";
-import { renderTask } from "./mainDisplay";
+import { sidebarShowLists } from "./sidebar";
 
 startApp();
-sidebarRenderLists();
-for (let i of JSON.parse(localStorage.getItem("lists"))[0]["childTasks"]) {
-    renderTask(i);
-}
+sidebarShowLists();
