@@ -181,9 +181,11 @@ body {
 
 
 
-
-
 #editor {
+    display: none;
+}
+
+#editor.visible {
     display: flex;
     flex-direction: column;
 
@@ -269,4 +271,23 @@ input:focus-visible, textarea:focus-visible {
 #editor-notes {
     min-height: 5lh;
     max-height: 10lh;
+}
+
+
+.close-button {
+    align-self: flex-end;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 2px;
+    height: lh;
+    line-height: 1lh;
+    aspect-ratio: 1/1;
+}
+
+.close-button:hover {
+    background-color: lightgray;
+    cursor: pointer;
 }

@@ -20,6 +20,7 @@ export const listFullPageTemplate = function(listID){
     myListPageNode.addEventListener("click", (e) => {
         let closestTaskDiv = e.target.closest(".task");
         if (closestTaskDiv != null) {
+            editor.classList.add("visible");
             renderContentAt(editor, ...taskEditTemplate(closestTaskDiv.dataset["taskId"]));
             editor.dataset["currentListId"] = listID;
         }
@@ -137,5 +138,16 @@ export const taskEditTemplate = function(taskID) {
     // todo : add delete function
     const myTaskDeleteButton = newElement("button", ["className", "delete-button"], ["innerText", "Delete this task"]);
 
-    return [myTaskEditorForm, myTaskDeleteButton]
+    return [closeButton, myTaskEditorForm, myTaskDeleteButton]
 }
+
+
+
+const closeButton = (() => {
+    const button = newElement("div", ["className", "close-button"], ["innerText", "✕"]);
+    button.addEventListener("click", (e) => {
+        e.target.parentNode.classList.remove("visible");
+    });
+
+    return button
+})();
