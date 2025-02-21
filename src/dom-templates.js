@@ -1,30 +1,34 @@
 import autosize from "autosize";
+import { getTaskFromID, getListFromID, pushTaskToStorage, updateTaskFromEditor } from "./task-managment";
 import { formatDueDateString, newElement } from "./tools";
-import { editor, renderContentAt } from "./ui";
+import { editor, mainDisplay, renderContentAt } from "./ui";
+
 import arrowRight from "./img/arrow-right.svg";
 import point from "./img/point.svg";
 
 
+
 export const listFullPageTemplate = function(listID){
-    const myList = JSON.parse(localStorage.getItem("lists"))[listID];
+    const myList = getListFromID(listID);
     const myListPageNode = newElement("div", ["className", "list-fullpage"]);
     myListPageNode.append(newElement("h1", ["className", "list-title-fullpage"], ["innerText", myList.title]));
 
     for (let taskID of myList.childTasks) {
-        myListPageNode.append(newTaskNode(taskID));
+        myListPageNode.append(taskNode(taskID));
     }
 
     myListPageNode.addEventListener("click", (e) => {
         let closestTaskDiv = e.target.closest(".task");
         if (closestTaskDiv != null) {
-            renderContentAt(editor, taskEditTemplate(closestTaskDiv.dataset["taskId"]));
+            renderContentAt(editor, ...taskEditTemplate(closestTaskDiv.dataset["taskId"]));
+            editor.dataset["currentListId"] = listID;
         }
     })
     return myListPageNode
 }
 
 
-export const newSidebarListNode = function(listID, listObj) {
+export const sidebarListNode = function(listID, listObj) {
     const myListNode = newElement("div", ["className", "side-section"]);
     const myListTitle = newElement("p", ["innerText", listObj.title]);
     const pointImage = newElement("img", ["className", "icon"], ["src", point]);
@@ -35,8 +39,8 @@ export const newSidebarListNode = function(listID, listObj) {
 }
 
 
-const newTaskNode = function(taskID){
-    const myTask = JSON.parse(localStorage.getItem("tasks"))[taskID];
+const taskNode = function(taskID){
+    const myTask =getTaskFromID(taskID);
     
     const myTaskNode = newElement("div", ["className", "task"]);
     myTaskNode.append(newElement("img", ["src", arrowRight], ["className", "icon task-arrow"]))
@@ -78,8 +82,8 @@ const newTaskNode = function(taskID){
 
 
 export const taskEditTemplate = function(taskID) {
-    const myTask = JSON.parse(localStorage.getItem("tasks"))[taskID];
-    const myTaskEditorNode = newElement("div", ["className", "editor"]);
+    const myTask = getTaskFromID(taskID);
+    const myTaskEditorForm = newElement("form", ["className", "editor"]);
 
     const myTaskEditorTitleLabel = newElement("label", ["htmlFor", "editor-title"], ["innerText", "Title"]);
     const myTaskEditorTitle = newElement("textarea", ["placeholder", "Add a title (required)"], ["value", myTask.title], ["id", "editor-title"]);
@@ -114,15 +118,24 @@ export const taskEditTemplate = function(taskID) {
     const myTaskEditorNotes = newElement("textarea", ["placeholder", "Add some notes"], ["value", myTask.notes], ["id", "editor-notes"]);
     autosize(myTaskEditorNotes);
 
-    myTaskEditorNode.append(myTaskEditorTitleLabel, myTaskEditorTitle,
-                            myTaskEditorDescriptionLabel, myTaskEditorDescription,
-                            myTaskEditorPriorityLabel, myTaskEditorPriority,
-                            myTaskEditorDateLabel, myTaskEditorDate,
-                            myTaskEditorNotesLabel, myTaskEditorNotes);
+    myTaskEditorForm.append(
+        myTaskEditorTitleLabel, myTaskEditorTitle,
+        myTaskEditorDescriptionLabel, myTaskEditorDescription,
+        myTaskEditorPriorityLabel, myTaskEditorPriority,
+        myTaskEditorDateLabel, myTaskEditorDate,
+        myTaskEditorNotesLabel, myTaskEditorNotes
+    );
     
-    
-    const myTaskDeleteButton = newElement("button", ["className", "delete-button"], ["innerText", "Delete this task"]);
-    myTaskEditorNode.append(myTaskDeleteButton);
+    myTaskEditorForm.addEventListener("focusout", () => {
+        updateTaskFromEditor(myTask, myTaskEditorForm)
+        myTaskEditorTitle.value = myTask.title;
+        pushTaskToStorage(taskID, myTask);
+        renderContentAt(mainDisplay, listFullPageTemplate(editor.dataset["currentListId"]));
+    });
 
-    return myTaskEditorNode
+
+    // todo : add delete function
+    const myTaskDeleteButton = newElement("button", ["className", "delete-button"], ["innerText", "Delete this task"]);
+
+    return [myTaskEditorForm, myTaskDeleteButton]
 }

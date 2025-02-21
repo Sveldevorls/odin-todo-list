@@ -14,11 +14,16 @@
     padding: 0;
 }
 
+body {
+    height: 100vh;
+    overflow: hidden;
+}
+
 #app {
     display: flex;
     font-family: "Roboto", sans-serif;
-
-    min-height: 100vh;
+    height: 100vh;
+    overflow-y: auto;
 }
 
 .icon {
@@ -71,6 +76,8 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+
+    overflow: auto;
 }
 
 .task {
@@ -177,12 +184,12 @@
 
 
 #editor {
-    display: initial;
-
+    display: flex;
+    flex-direction: column;
 
     width: 15em;
     padding: 1em;
-    font-size: 1rem;
+    font-size: 1rem;   
 }
 
 .editor {
@@ -192,8 +199,9 @@
 
     display: flex;
     flex-direction: column;
-
-    height: 100%;
+    
+    margin-bottom: 1lh;
+    overflow: auto;
 }
 
 input, textarea, select {
@@ -205,8 +213,17 @@ input, textarea, select {
     border-radius: 5px;
     border: 1px solid black;
     padding: 0 3px;
-    margin: 0.1lh 0 0.5lh 0;
     background-color: white;
+    
+    overflow-x: hidden !important;
+}
+
+label {
+    margin-bottom: 0.1lh;
+}
+
+* + label {
+    margin-top: 0.5lh;
 }
 
 input {
@@ -232,10 +249,24 @@ input:focus-visible, textarea:focus-visible {
 }
 
 .delete-button {
-    height: 2lh;
+    min-height: 2lh;
     background-color: rgb(243, 32, 32);
     border: 1px solid black;
     border-radius: 0.5lh;
     color: black;
     margin-top: auto;
+}
+
+#editor-title, #editor-description {
+    min-height: 3lh;
+    max-height: 3lh;
+}
+
+#editor-priority, #editor-date {
+    min-height: 1.5lh;
+}
+
+#editor-notes {
+    min-height: 5lh;
+    max-height: 10lh;
 }

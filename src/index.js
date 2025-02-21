@@ -8,4 +8,4 @@ import { taskEditTemplate } from "./dom-templates";
 startApp();
 sidebarShowLists();
 
-renderContentAt(editor, taskEditTemplate(0));
+renderContentAt(editor, ...taskEditTemplate(0));

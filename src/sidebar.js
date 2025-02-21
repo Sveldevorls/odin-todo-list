@@ -1,11 +1,11 @@
-import { listFullPageTemplate, newSidebarListNode } from "./dom-templates";
+import { listFullPageTemplate, sidebarListNode } from "./dom-templates";
 import { sidebarLists, mainDisplay, renderContentAt } from "./ui";
 
 
 export const sidebarShowLists = function() {
     const myLists = JSON.parse(localStorage.getItem("lists"));
     for (let[id, list] of Object.entries(myLists)) {
-        sidebarLists.append(newSidebarListNode(id, list));
+        sidebarLists.append(sidebarListNode(id, list));
     }
 
     // every div in #lists has a dataset list-id
